@@ -6,6 +6,8 @@ The modification involves importing CSV file, parsing it and updating Config.xml
 
 Details can be found at <a href="https://woom221.github.io/" target="_blank">https://woom221.github.io/</a>
 
+[https://woom221.github.io/](https://woom221.github.io/){target="_blank"}
+
 The work is still in progress.
 
 Below are the original documentations.
