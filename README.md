@@ -1,3 +1,15 @@
+# Modified MATSim Project
+
+Originally from matsim-example-project, I attempted to modify the codes to effectively meet the needs for the client.
+
+The modification involves importing CSV file, parsing it and updating Config.xml.
+
+Details can be found at [https://woom221.github.io/](https://woom221.github.io/)
+
+The work is still in progress.
+
+Below are the original documentations.
+
 # matsim-example-project
 
 A small example of how to use MATSim as a library.
