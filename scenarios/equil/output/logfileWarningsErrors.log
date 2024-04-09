@@ -1,0 +1,137 @@
+2024-04-08T18:32:05,228  WARN PrepareForSimImpl:229 'usePersonIdForMissingVehicleId' is deprecated. It will be removed soon.
+2024-04-08T18:32:05,742 ERROR MatsimRuntimeModifications:76 Getting uncaught Exception in Thread main
+com.google.inject.ProvisionException: Unable to provision, see the following errors:
+
+1) [Guice/ErrorInCustomProvider]: NullPointerException: Cannot invoke "org.matsim.core.config.groups.PlanCalcScoreConfigGroup$ModeParams.getMonetaryDistanceRate()" because the return value of "java.util.Map.get(Object)" is null
+  at TripRouterModule.install(TripRouterModule.java:68)
+      \_ installed by: Modules$CombinedModule -> Modules$CombinedModule -> AbstractModule$4 -> Modules$OverrideModule -> Controler$2 -> ControlerDefaultsModule -> TripRouterModule
+  while locating RoutingModule annotated with @Named("train91-58")
+  while locating RoutingModule annotated with @Element(setName=,uniqueId=98, type=MAPBINDER, keyType=String)
+  at TripRouter.<init>(TripRouter.java:105)
+  while locating TripRouter
+
+Learn more:
+  https://github.com/google/guice/wiki/ERROR_IN_CUSTOM_PROVIDER
+
+1 error
+
+======================
+Full classname legend:
+======================
+AbstractModule$4:        "org.matsim.core.controler.AbstractModule$4"
+Controler$2:             "org.matsim.core.controler.Controler$2"
+ControlerDefaultsModule: "org.matsim.core.controler.ControlerDefaultsModule"
+Element:                 "com.google.inject.internal.Element"
+Modules$CombinedModule:  "com.google.inject.util.Modules$CombinedModule"
+Modules$OverrideModule:  "com.google.inject.util.Modules$OverrideModule"
+Named:                   "com.google.inject.name.Named"
+RoutingModule:           "org.matsim.core.router.RoutingModule"
+TripRouter:              "org.matsim.core.router.TripRouter"
+TripRouterModule:        "org.matsim.core.router.TripRouterModule"
+========================
+End of classname legend:
+========================
+
+	at com.google.inject.internal.InternalProvisionException.toProvisionException(InternalProvisionException.java:251) ~[guice-5.1.0.jar:?]
+	at com.google.inject.internal.InjectorImpl$1.get(InjectorImpl.java:1104) ~[guice-5.1.0.jar:?]
+	at org.matsim.core.controler.PrepareForSimImpl.lambda$run$0(PrepareForSimImpl.java:180) ~[matsim-15.0.jar:?]
+	at org.matsim.core.population.algorithms.ParallelPersonAlgorithmUtils.run(ParallelPersonAlgorithmUtils.java:87) ~[matsim-15.0.jar:?]
+	at org.matsim.core.controler.PrepareForSimImpl.run(PrepareForSimImpl.java:179) ~[matsim-15.0.jar:?]
+	at org.matsim.core.controler.NewControler.prepareForSim(NewControler.java:114) ~[matsim-15.0.jar:?]
+	at org.matsim.core.controler.AbstractController$1.run(AbstractController.java:81) ~[matsim-15.0.jar:?]
+	at org.matsim.core.controler.MatsimRuntimeModifications.run(MatsimRuntimeModifications.java:70) [matsim-15.0.jar:?]
+	at org.matsim.core.controler.MatsimRuntimeModifications.run(MatsimRuntimeModifications.java:53) [matsim-15.0.jar:?]
+	at org.matsim.core.controler.AbstractController.run(AbstractController.java:90) [matsim-15.0.jar:?]
+	at org.matsim.core.controler.NewControler.run(NewControler.java:83) [matsim-15.0.jar:?]
+	at org.matsim.core.controler.Controler.run(Controler.java:250) [matsim-15.0.jar:?]
+	at org.matsim.project.RunMatsim.main(RunMatsim.java:87) [classes/:?]
+Caused by: java.lang.NullPointerException: Cannot invoke "org.matsim.core.config.groups.PlanCalcScoreConfigGroup$ModeParams.getMonetaryDistanceRate()" because the return value of "java.util.Map.get(Object)" is null
+	at org.matsim.core.router.costcalculators.RandomizingTimeDistanceTravelDisutilityFactory.logWarningsIfNecessary(RandomizingTimeDistanceTravelDisutilityFactory.java:100) ~[matsim-15.0.jar:?]
+	at org.matsim.core.router.costcalculators.RandomizingTimeDistanceTravelDisutilityFactory.createTravelDisutility(RandomizingTimeDistanceTravelDisutilityFactory.java:70) ~[matsim-15.0.jar:?]
+	at org.matsim.core.router.NetworkRoutingProvider.get(NetworkRoutingProvider.java:128) ~[matsim-15.0.jar:?]
+	at org.matsim.core.router.NetworkRoutingProvider.get(NetworkRoutingProvider.java:48) ~[matsim-15.0.jar:?]
+	at com.google.inject.internal.ProviderInternalFactory.provision(ProviderInternalFactory.java:86) ~[guice-5.1.0.jar:?]
+	at com.google.inject.internal.InternalFactoryToInitializableAdapter.provision(InternalFactoryToInitializableAdapter.java:57) ~[guice-5.1.0.jar:?]
+	at com.google.inject.internal.ProviderInternalFactory.circularGet(ProviderInternalFactory.java:60) ~[guice-5.1.0.jar:?]
+	at com.google.inject.internal.InternalFactoryToInitializableAdapter.get(InternalFactoryToInitializableAdapter.java:47) ~[guice-5.1.0.jar:?]
+	at com.google.inject.internal.FactoryProxy.get(FactoryProxy.java:60) ~[guice-5.1.0.jar:?]
+	at com.google.inject.internal.InjectorImpl$1.get(InjectorImpl.java:1101) ~[guice-5.1.0.jar:?]
+	at org.matsim.core.router.TripRouter.<init>(TripRouter.java:109) ~[matsim-15.0.jar:?]
+	at org.matsim.core.router.TripRouter$$FastClassByGuice$$13959963.GUICE$TRAMPOLINE(<generated>) ~[?:?]
+	at org.matsim.core.router.TripRouter$$FastClassByGuice$$13959963.apply(<generated>) ~[?:?]
+	at com.google.inject.internal.DefaultConstructionProxyFactory$FastClassProxy.newInstance(DefaultConstructionProxyFactory.java:82) ~[guice-5.1.0.jar:?]
+	at com.google.inject.internal.ConstructorInjector.provision(ConstructorInjector.java:114) ~[guice-5.1.0.jar:?]
+	at com.google.inject.internal.ConstructorInjector.construct(ConstructorInjector.java:91) ~[guice-5.1.0.jar:?]
+	at com.google.inject.internal.ConstructorBindingImpl$Factory.get(ConstructorBindingImpl.java:300) ~[guice-5.1.0.jar:?]
+	at com.google.inject.internal.InjectorImpl$1.get(InjectorImpl.java:1101) ~[guice-5.1.0.jar:?]
+	... 11 more
+2024-04-08T18:32:05,805 ERROR MatsimRuntimeModifications:82 ERROR --- This is an unexpected shutdown!
+2024-04-08T18:32:05,805 ERROR MatsimRuntimeModifications:85 Shutdown possibly caused by the following Exception:
+com.google.inject.ProvisionException: Unable to provision, see the following errors:
+
+1) [Guice/ErrorInCustomProvider]: NullPointerException: Cannot invoke "org.matsim.core.config.groups.PlanCalcScoreConfigGroup$ModeParams.getMonetaryDistanceRate()" because the return value of "java.util.Map.get(Object)" is null
+  at TripRouterModule.install(TripRouterModule.java:68)
+      \_ installed by: Modules$CombinedModule -> Modules$CombinedModule -> AbstractModule$4 -> Modules$OverrideModule -> Controler$2 -> ControlerDefaultsModule -> TripRouterModule
+  while locating RoutingModule annotated with @Named("train91-58")
+  while locating RoutingModule annotated with @Element(setName=,uniqueId=98, type=MAPBINDER, keyType=String)
+  at TripRouter.<init>(TripRouter.java:105)
+  while locating TripRouter
+
+Learn more:
+  https://github.com/google/guice/wiki/ERROR_IN_CUSTOM_PROVIDER
+
+1 error
+
+======================
+Full classname legend:
+======================
+AbstractModule$4:        "org.matsim.core.controler.AbstractModule$4"
+Controler$2:             "org.matsim.core.controler.Controler$2"
+ControlerDefaultsModule: "org.matsim.core.controler.ControlerDefaultsModule"
+Element:                 "com.google.inject.internal.Element"
+Modules$CombinedModule:  "com.google.inject.util.Modules$CombinedModule"
+Modules$OverrideModule:  "com.google.inject.util.Modules$OverrideModule"
+Named:                   "com.google.inject.name.Named"
+RoutingModule:           "org.matsim.core.router.RoutingModule"
+TripRouter:              "org.matsim.core.router.TripRouter"
+TripRouterModule:        "org.matsim.core.router.TripRouterModule"
+========================
+End of classname legend:
+========================
+
+	at com.google.inject.internal.InternalProvisionException.toProvisionException(InternalProvisionException.java:251) ~[guice-5.1.0.jar:?]
+	at com.google.inject.internal.InjectorImpl$1.get(InjectorImpl.java:1104) ~[guice-5.1.0.jar:?]
+	at org.matsim.core.controler.PrepareForSimImpl.lambda$run$0(PrepareForSimImpl.java:180) ~[matsim-15.0.jar:?]
+	at org.matsim.core.population.algorithms.ParallelPersonAlgorithmUtils.run(ParallelPersonAlgorithmUtils.java:87) ~[matsim-15.0.jar:?]
+	at org.matsim.core.controler.PrepareForSimImpl.run(PrepareForSimImpl.java:179) ~[matsim-15.0.jar:?]
+	at org.matsim.core.controler.NewControler.prepareForSim(NewControler.java:114) ~[matsim-15.0.jar:?]
+	at org.matsim.core.controler.AbstractController$1.run(AbstractController.java:81) ~[matsim-15.0.jar:?]
+	at org.matsim.core.controler.MatsimRuntimeModifications.run(MatsimRuntimeModifications.java:70) [matsim-15.0.jar:?]
+	at org.matsim.core.controler.MatsimRuntimeModifications.run(MatsimRuntimeModifications.java:53) [matsim-15.0.jar:?]
+	at org.matsim.core.controler.AbstractController.run(AbstractController.java:90) [matsim-15.0.jar:?]
+	at org.matsim.core.controler.NewControler.run(NewControler.java:83) [matsim-15.0.jar:?]
+	at org.matsim.core.controler.Controler.run(Controler.java:250) [matsim-15.0.jar:?]
+	at org.matsim.project.RunMatsim.main(RunMatsim.java:87) [classes/:?]
+Caused by: java.lang.NullPointerException: Cannot invoke "org.matsim.core.config.groups.PlanCalcScoreConfigGroup$ModeParams.getMonetaryDistanceRate()" because the return value of "java.util.Map.get(Object)" is null
+	at org.matsim.core.router.costcalculators.RandomizingTimeDistanceTravelDisutilityFactory.logWarningsIfNecessary(RandomizingTimeDistanceTravelDisutilityFactory.java:100) ~[matsim-15.0.jar:?]
+	at org.matsim.core.router.costcalculators.RandomizingTimeDistanceTravelDisutilityFactory.createTravelDisutility(RandomizingTimeDistanceTravelDisutilityFactory.java:70) ~[matsim-15.0.jar:?]
+	at org.matsim.core.router.NetworkRoutingProvider.get(NetworkRoutingProvider.java:128) ~[matsim-15.0.jar:?]
+	at org.matsim.core.router.NetworkRoutingProvider.get(NetworkRoutingProvider.java:48) ~[matsim-15.0.jar:?]
+	at com.google.inject.internal.ProviderInternalFactory.provision(ProviderInternalFactory.java:86) ~[guice-5.1.0.jar:?]
+	at com.google.inject.internal.InternalFactoryToInitializableAdapter.provision(InternalFactoryToInitializableAdapter.java:57) ~[guice-5.1.0.jar:?]
+	at com.google.inject.internal.ProviderInternalFactory.circularGet(ProviderInternalFactory.java:60) ~[guice-5.1.0.jar:?]
+	at com.google.inject.internal.InternalFactoryToInitializableAdapter.get(InternalFactoryToInitializableAdapter.java:47) ~[guice-5.1.0.jar:?]
+	at com.google.inject.internal.FactoryProxy.get(FactoryProxy.java:60) ~[guice-5.1.0.jar:?]
+	at com.google.inject.internal.InjectorImpl$1.get(InjectorImpl.java:1101) ~[guice-5.1.0.jar:?]
+	at org.matsim.core.router.TripRouter.<init>(TripRouter.java:109) ~[matsim-15.0.jar:?]
+	at org.matsim.core.router.TripRouter$$FastClassByGuice$$13959963.GUICE$TRAMPOLINE(<generated>) ~[?:?]
+	at org.matsim.core.router.TripRouter$$FastClassByGuice$$13959963.apply(<generated>) ~[?:?]
+	at com.google.inject.internal.DefaultConstructionProxyFactory$FastClassProxy.newInstance(DefaultConstructionProxyFactory.java:82) ~[guice-5.1.0.jar:?]
+	at com.google.inject.internal.ConstructorInjector.provision(ConstructorInjector.java:114) ~[guice-5.1.0.jar:?]
+	at com.google.inject.internal.ConstructorInjector.construct(ConstructorInjector.java:91) ~[guice-5.1.0.jar:?]
+	at com.google.inject.internal.ConstructorBindingImpl$Factory.get(ConstructorBindingImpl.java:300) ~[guice-5.1.0.jar:?]
+	at com.google.inject.internal.InjectorImpl$1.get(InjectorImpl.java:1101) ~[guice-5.1.0.jar:?]
+	... 11 more
+2024-04-08T18:32:06,090 ERROR MatsimRuntimeModifications:100 ERROR --- MATSim unexpectedly terminated. Please check the output or the logfile with warnings and errors for hints.
+2024-04-08T18:32:06,090 ERROR MatsimRuntimeModifications:101 ERROR --- results should not be used for further analysis.
+2024-04-08T18:32:06,090 ERROR MatsimRuntimeModifications:105 ERROR --- This was an unexpected shutdown! See the log file for a possible reason.

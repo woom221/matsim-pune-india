@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config SYSTEM "http://www.matsim.org/files/dtd/config_v2.dtd">
+<config>
+
+<!-- ====================================================================== -->
+
+	<module name="global">
+		<param name="randomSeed" value="4711" />
+		<param name= "numberOfThreads" value= "16" />
+		<param name="coordinateSystem" value="EPSG:32617" />
+	</module>
+	
+<!-- ====================================================================== -->
+
+	<module name="controler" >	
+		<param name="createGraphs" value="true" />
+		<param name="dumpDataAtEnd" value="true" />
+		<param name="firstIteration" value="0" />
+		<param name="lastIteration" value="300" />
+		<param name="routingAlgorithmType" value="AStarLandmarks" />
+		<param name="mobsim" value="qsim" />
+		<param name="overwriteFiles" value="deleteDirectoryIfExists" />
+		<param name="writeEventsInterval" value="100" />
+		<param name="writePlansInterval" value="100" />
+		<param name="writeSnapshotsInterval" value="100" />		
+	</module>
+
+<!-- ====================================================================== -->
+
+	<module name="network">
+		<param name="inputNetworkFile" value="22_01_10_network_wRide_modified_speed.xml" />		
+	</module>
+
+<!-- ====================================================================== -->
+
+	<module name="plans" >
+		<param name="inputPlansFile" value="10p_expanded_tts_plan_wRide.xml" />		 <!-- ========================   change of percent of population  ============================= -->		
+	</module>
+		
+<!-- ====================================================================== -->
+
+	<module name="vehicles" >
+		<param name="vehiclesFile" value="mode-vehicles.xml" /> 
+	</module>
+
+<!-- ====================================================================== -->
+
+	<module name="transit" >	
+		<param name="routingAlgorithmType" value="SwissRailRaptor" />
+		<param name="transitModes" value="localPt, regionalPt" />
+		<param name="transitScheduleFile" value="22_05_05_transitScedule_sub.xml" />
+		<param name="vehiclesFile" value="tts_vehicles_GO_10p.xml" />		              <!-- ========================   change of percent of population  ============================= -->
+		<param name="useTransit" value="true" />		
+	</module>
+	
+<!-- ====================================================================== -->
+
+	<module name="planscalcroute" >		
+		<param name="networkModes" value="car,ride,taxi,motorcycle" />
+		<parameterset type="teleportedModeParameters" >		
+			<param name="mode" value="walk" />
+			<param name="beelineDistanceFactor" value="1.3" />
+			<param name="teleportedModeSpeed" value="1.111" />			
+		</parameterset>	
+		<parameterset type="teleportedModeParameters" >		
+			<param name="mode" value="bike" />
+			<param name="beelineDistanceFactor" value="1.3" />
+			<param name="teleportedModeSpeed" value="5" /> 			
+		</parameterset>		
+		<parameterset type="teleportedModeParameters" >		
+			<param name="mode" value="other" />
+			<param name="teleportedModeFreespeedFactor" value="1.5" />			
+		</parameterset>		
+	</module>
+
+<!-- ====================================================================== -->
+
+	<module name="qsim" >	
+		<param name="startTime" value="00:00:00" />
+		<param name="endTime" value="36:00:00" />
+		<param name= "numberOfThreads" value= "14" />
+		<param name="flowCapacityFactor" value=".1" />		             <!-- ========================   change of percent of population  ============================= -->
+		<param name="storageCapacityFactor" value=".12" />		         <!-- ========================   change of percent of population  ============================= -->
+		<param name="mainMode" value="car,taxi,motorcycle" />
+		<param name="linkDynamics" value="PassingQ" />
+		<param name="trafficDynamics" value="kinematicWaves" />
+		<param name="vehiclesSource" value="modeVehicleTypesFromVehiclesData" />
+		<param name="insertingWaitingVehiclesBeforeDrivingVehicles" value="true" />		
+	</module>
+
+<!-- ====================================================================== -->
+
+	<module name="TimeAllocationMutator" >
+		<param name="mutationAffectsDuration" value="true" />	
+		<param name="mutationRange" value="1800.0" />
+	</module>
+
+<!-- ====================================================================== -->
+
+
+
+	<module name="strategy" >
+
+		<param name="fractionOfIterationsToDisableInnovation" value="0.8" />
+		<param name="maxAgentPlanMemorySize" value="5" />
+
+		<parameterset type="strategysettings" >
+			<!-- strategyName of strategy.  Possible default names: KeepLastSelected BestScore ChangeExpBeta SelectExpBeta SelectRandom SelectPathSizeLogit  (selectors), ReRoute TimeAllocationMutator ChangeLegMode TimeAllocationMutator_ReRoute ChangeSingleLegMode ChangeSingleTripMode SubtourModeChoice ChangeTripMode TripSubtourModeChoice  (innovative strategies). -->
+			<param name="strategyName" value="ChangeExpBeta" />
+			<param name="subpopulation" value="null" />
+			<param name="weight" value="0.9" />
+		</parameterset>
+		<parameterset type="strategysettings" >
+			<param name="strategyName" value="ReRoute" />
+			<param name="subpopulation" value="null" />
+			<param name="weight" value="0.05" />
+		</parameterset>
+		<parameterset type="strategysettings" >
+			<param name="strategyName" value="TimeAllocationMutator" />
+			<param name="subpopulation" value="null" />
+			<param name="weight" value="0.05" />
+		</parameterset>
+		
+		<!--
+		
+		<parameterset type="strategysettings" >
+			<param name="strategyName" value="SubtourModeChoice" />
+			<param name="subpopulation" value="null" />
+			<param name="weight" value="0.02" />
+		</parameterset>
+		
+		-->
+	</module>
+
+<!-- ====================================================================== 
+
+	<module name="subtourModeChoice" >
+		<param name="chainBasedModes" value="car,motorcycle,bike" />
+		<param name="modes" value="car,localPt,bike,walk" />
+	</module>
+	
+ ====================================================================== -->
+
+	<module name="planCalcScore" >	
+		
+		<parameterset type="scoringParameters" >
+			<param name="earlyDeparture" value="-0.0" />
+			<param name="lateArrival" value="-2.58" />			
+			<param name="performing" value="1.08" />
+			<param name="subpopulation" value="null" />
+			<param name="waiting" value="-0.0" />
+			<param name="waitingPt" value="-0.54" />
+			<param name="marginalUtilityOfMoney" value="0.017" />
+
+
+			<parameterset type="activityParams" >
+				<param name="activityType" value="home" />
+				<param name="minimalDuration" value="08:00:00" />
+				<param name="openingTime" value="undefined" />
+				<param name="priority" value="1.0" />
+				<param name="typicalDuration" value="12:00:00" />
+				<param name="typicalDurationScoreComputation" value="uniform" />
+			</parameterset>
+			<parameterset type="activityParams" >
+				<param name="activityType" value="work" />
+				<param name="openingTime" value="06:00:00" />
+				<param name="priority" value="1.0" />
+				<param name="typicalDuration" value="08:00:00" />
+				<param name="typicalDurationScoreComputation" value="uniform" />
+			</parameterset>			
+			<parameterset type="activityParams" >
+				<param name="activityType" value="education" />
+				<param name="openingTime" value="06:00:00" />
+				<param name="priority" value="1.0" />
+				<param name="typicalDuration" value="08:00:00" />
+				<param name="typicalDurationScoreComputation" value="uniform" />
+			</parameterset>					
+			<parameterset type="activityParams" >			
+				<param name="activityType" value="shop" />
+				<param name="openingTime" value="undefined" />
+				<param name="priority" value="1.0" />
+				<param name="typicalDuration" value="06:00:00" />
+				<param name="typicalDurationScoreComputation" value="uniform" />				
+			</parameterset>			
+			<parameterset type="activityParams" >			
+				<param name="activityType" value="leisure" />
+				<param name="openingTime" value="undefined" />
+				<param name="priority" value="1.0" />
+				<param name="typicalDuration" value="10:00:00" />
+				<param name="typicalDurationScoreComputation" value="uniform" />				
+			</parameterset>						
+			<parameterset type="activityParams" >
+				<param name="activityType" value="other" />
+				<param name="openingTime" value="undefined" />
+				<param name="priority" value="2.0" />
+				<param name="scoringThisActivityAtAll" value="false" />
+				<param name="typicalDuration" value="02:00:00" />
+				<param name="typicalDurationScoreComputation" value="uniform" />
+			</parameterset>
+			<parameterset type="modeParams" >
+				<param name="constant" value="0.0" />
+				<param name="marginalUtilityOfTraveling_util_hr" value="0.0" />
+				<param name="mode" value="car" />
+				<!-- <param name="dailyMonetaryConstant" value="-9.18" />   -->
+				<param name="monetaryDistanceRate" value="-0.0001" />
+			</parameterset>			
+			<parameterset type="modeParams" >
+				<param name="constant" value="1.032" />
+				<param name="marginalUtilityOfTraveling_util_hr" value="0.0" />
+				<param name="mode" value="ride" />
+				<param name="monetaryDistanceRate" value="-0.00005" />
+			</parameterset>			
+			<parameterset type="modeParams" >
+				<param name="constant" value="1.415" />
+				<param name="marginalUtilityOfTraveling_util_hr" value="0.0" />
+				<param name="mode" value="taxi" />
+				<param name="monetaryDistanceRate" value="-.00175" />
+			</parameterset>
+			<parameterset type="modeParams" >
+				<param name="constant" value="-1.565" />
+				<param name="marginalUtilityOfTraveling_util_hr" value="0.0" />
+				<param name="mode" value="motorcycle" />
+				<!-- <param name="dailyMonetaryConstant" value="-3.33" />    -->
+				<param name="monetaryDistanceRate" value="-0.00005" />
+			</parameterset>
+			<parameterset type="modeParams" >
+				<param name="mode" value="pt" />
+			</parameterset> 		
+			<parameterset type="modeParams" >
+				<param name="mode" value="localPt" />
+				<param name="constant" value="1.282" />
+				<param name="marginalUtilityOfTraveling_util_hr" value=".66" />
+				<param name="dailyMonetaryConstant" value="-4.3" />
+			</parameterset>			
+			<parameterset type="modeParams" >
+				<param name="mode" value="regionalPt" />
+				<param name="constant" value="1.54" />
+				<param name="marginalUtilityOfTraveling_util_hr" value="0.42" />
+				<param name="monetaryDistanceRate" value="-0.00026" />
+			</parameterset>  					
+			<parameterset type="modeParams" >
+				<param name="mode" value="bike" />
+				<param name="constant" value="1.39" />				
+			</parameterset>			
+			<parameterset type="modeParams" >
+				<param name="mode" value="walk" />
+				<param name="constant" value="0.86" />				
+			</parameterset>			
+			<parameterset type="modeParams" >
+				<param name="mode" value="other" />
+				<param name="constant" value="-1.56" />				
+			</parameterset>			
+		</parameterset>
+	</module>
+
+
+
+<!-- ====================================================================== -->
+	<module name="swissRailRaptor">
+	
+		<!-- Intermodal access and egress (e.g. park and ride, kiss and ride -->				
+		<param name="useIntermodalAccessEgress" value="false" />
+
+		<!-- Differentiating PT Sub-Modes ROUTE CHOICE MODEL -->		
+		<param name="useModeMappingForPassengers" value="true" />
+		<parameterset type="modeMapping">
+			<param name="routeMode" value="rail" />
+			<param name="passengerMode" value="regionalPt" />
+		</parameterset>
+		<parameterset type="modeMapping">
+			<param name="routeMode" value="subway" />
+			<param name="passengerMode" value="localPt" />
+		</parameterset>
+		<parameterset type="modeMapping">
+			<param name="routeMode" value="tram" />
+			<param name="passengerMode" value="localPt" />
+		</parameterset>
+		<parameterset type="modeMapping">
+			<param name="routeMode" value="bus" />
+			<param name="passengerMode" value="localPt" />
+		</parameterset>    
+			
+		
+		<!-- Improved Cost-Calculation for Transfers 	-->	
+		<param name="transferPenaltyBaseCost" value="0.5" />
+		<param name="transferPenaltyCostPerTravelTimeHour" value="1.2" />
+		<param name="transferPenaltyMinCost" value="1.0" />
+		<param name="transferPenaltyMaxCost" value="5.0" />
+		
+		
+	</module>
+		
+
+	
+<!-- ====================================================================== -->
+
+	<!-- Deterministic Public Transport Simulation  -->
+	<module name="SBBPt" >
+		<param name="deterministicServiceModes" value="rail,subway" />
+		<param name="createLinkEventsInterval" value="10" />
+	</module>
+	
+<!-- ====================================================================== -->
+
+	<module name="counts" >
+		<param name="analyzedModes" value="car,taxi,ride" />
+		<param name="averageCountsOverIterations" value="5" />
+		<param name="countsScaleFactor" value="10.0" />                             <!-- ========================   change of percent of population  ============================= -->
+		<!-- distance to distanceFilterCenterNode to include counting stations. The unit of distance is the Euclidean distance implied by the coordinate system -->
+		<param name="distanceFilter" value="null" />
+		<!-- node id for center node of distance filter -->
+		<param name="distanceFilterCenterNode" value="null" />
+		<!-- If true, link counts from legs performed on modes not included in the 'analyzedModes' parameter are ignored. -->
+		<param name="filterModes" value="false" />
+		<param name="inputCountsFile" value="peak_counts_gtha.xml" />
+		<param name="outputformat" value="txt" />
+		<param name="writeCountsInterval" value="50" />
+	</module>
+
+	
+<!-- ====================================================================== -->
+
+	<module name="ptCounts" >
+		<param name="countsScaleFactor" value="10.0" />                           <!-- ========================   change of percent of population  ============================= -->
+		<param name="distanceFilter" value="null" />
+		<param name="distanceFilterCenterNode" value="null" />
+		<param name="inputAlightCountsFile" value="null" />
+		<param name="inputBoardCountsFile" value="null" />
+		<param name="inputOccupancyCountsFile" value="null" />
+		<param name="outputformat" value="txt" />
+		<param name="ptCountsInterval" value="10" />		
+	</module>
+	
+	
+<!-- ====================================================================== -->	
+
+	<module name="cadytsCar" >
+		<param name="calibratedLinks" value="600228,600227,596206,248932,482023,482022,992306,992305,857181,857182,792733,127994,1005922,1005921,902531,1000148,560323,560324,940455,940454,569543,569544,68003,68206,168163,223124,964603,1130601,346268,346269,875837,875838,1041367,1041368,472046,472047,949847,949848,566865,566866,32676,32677,503086,503087,74984,75012,561708,23683,352443,352437,1164486,978345,393583,780869,881413,830405,903983,903933,1105946,193106,24036,392074,946060,660976,23947,23946,338817,1079716,501409,501408,106224,106238,1114315,1114316,546690,22936,748134,394266,603392,386549,1066802,1013700,24164,167729,337977,457529,985804,184178,863419,863462,159008,159010,587046,273424,618881,618880,506455,417024,601608,601609,868117,429677,787601,787602,844427,844431,473136,473137,87734,567283,487861,487863,952093,518813,1028994,102615,938383,731583,258888,258889,706816,167822,23678,1065972,666920,939247,434572,158426,23849,585417,893831,893871,585404,893827,132745,1114426,467624,473093,972429,126668,988443,999276,999248,603098,240705,434594,156535,156534,873767,873766,563944,563945,1166239,1166259,203931,203932,900937,1061315,151132,151131,2629,2628,769190,221781,739524,559673,332928,71449,106437,106430,452731,658581,49538,999333,46143,118311,994999,396596,1103286,1023631,818918,818908,447905,447879,393278,446550,158260,768929,106301,106335,832079,557153,541798,1067154,930543,60315,1131545,928158,564357,940546,816678,1125334,269514,555666,72095,751804,997004,997003,900423,298356,417773,947604,412900,412901,197658,197657,805902,805904,59760,71390,965627,913748,435034,988021,33606,33605,723462,723461,434998,3300,337251,337242,982968,1148127,770400,770401,801241,857140,1073521,1073540,5924,456050,213610,7111,1026749,164865,213080,736115,1111315,1146672,905059,905060,1086982,1086981,659917,659918,96770,96771,1057892,978658,1024182,1069619" />
+		<param name="startTime" value="18000" />
+		<!-- The last second of the day to be used for calibration.  hh:mm:ss format -->
+		<param name="endTime" value="79199" />
+		<param name="freezeIteration" value="2147483647" />
+		<param name="minFlowStddevVehH" value="25.0" />
+		<param name="preparatoryIterations" value="1" />
+		<param name="regressionInertia" value="0.95" />
+		<!-- The first second of the day to be used for calibration.  hh:mm:ss format -->
+
+		<!-- Length of time bin for which counts are aggregated.  IN SECONDS!!!!  Default is 3600. -->
+		<param name="timeBinSize" value="3600" />
+		<param name="useBruteForce" value="false" />
+		<param name="varianceScale" value="1.0" />
+		<param name="writeAnalysisFile" value="true" />
+	</module>
+
+<!-- ====================================================================== -->
+
+	<module name="linkStats" >
+		<param name="averageLinkStatsOverIterations" value="10" />
+		<param name="writeLinkStatsInterval" value="50" />
+	</module>
+
+
+<!-- ====================================================================== -->
+
+	<module name="travelTimeCalculator" >
+		<!-- Transport modes that will be respected by the travel time collector. 'car' is default, which includes also busses from the pt simulation module. Use this parameter in combination with 'filterModes' = true! -->
+		<param name="analyzedModes" value="car,taxi,ride,bus,tram" />
+
+		<param name="calculateLinkToLinkTravelTimes" value="false" />
+		<param name="calculateLinkTravelTimes" value="true" />
+		<param name="filterModes" value="false" />
+		<param name="separateModes" value="false" />
+		<param name="travelTimeAggregator" value="optimistic" />
+		<param name="travelTimeBinSize" value="600" />
+		<!-- possible values: nullTravelTimeCalculatorArray TravelTimeCalculatorHashMap  -->
+		<param name="travelTimeCalculator" value="TravelTimeCalculatorArray" />
+		<!-- How to deal with link entry times at different positions during the time bin. Currently supported: average, linearinterpolation -->
+		<param name="travelTimeGetter" value="average" />
+	</module>
+
+</config>

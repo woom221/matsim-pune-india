@@ -19,6 +19,8 @@
 package org.matsim.project;
 
 import com.google.inject.internal.asm.$Type;
+import external.fn.EditConfig;
+import external.fn.ReadCSV;
 import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.Scenario;
 import org.matsim.api.core.v01.TransportMode;
@@ -43,48 +45,70 @@ import org.matsim.vehicles.VehicleType;
 import org.matsim.vehicles.VehicleUtils;
 import org.matsim.vis.otfvis.OTFVisConfigGroup;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Set;
+import java.io.File;
+import java.util.*;
 
 /**
  * @author nagel
  *
  */
 public class RunMatsim{
-
 	public static void main(String[] args) {
+		String pathToData = "data/fare.csv";
+		// String pathToPlan = "scenarios/example/planTest.xml";
+		String pathToConfig = "config.xml";
+		String pathToOutput = "configModified.xml";
+		File dataFile = new File(pathToData);
+		ReadCSV readCSV = new ReadCSV();
+		System.out.println("READING DATA COMPLETE");
+		try {
+			List<String[]> csvData = readCSV.read(dataFile);
+			EditConfig editConfig = new EditConfig();
+			Config config;
+			if ( args==null || args.length==0 || args[0]==null ){
+				Double trainConstant = 0.0; // Train constant factor
+				Double trainUtility = 0.0; // Train utility
+				editConfig.editConfig(csvData, pathToConfig, pathToOutput, trainConstant, trainUtility);
+				System.out.println("EDITING CONFIG COMPLETE");
+				config = ConfigUtils.loadConfig( pathToOutput);
+				System.out.println("LOADING CONFIG COMPLETE");
+			} else {
+				Double trainConstant = 0.0; // Train constant factor
+				Double trainUtility = 0.0; // Train utility
+				editConfig.editConfig(csvData, args[0], pathToOutput, trainConstant, trainUtility);
+				System.out.println("EDITING CONFIG COMPLETE");
+				config = ConfigUtils.loadConfig( pathToOutput );
+				System.out.println("LOADING CONFIG COMPLETE");
+			}
+			config.controler().setOverwriteFileSetting( OverwriteFileSetting.deleteDirectoryIfExists );
 
-		Config config;
-		if ( args==null || args.length==0 || args[0]==null ){
-			config = ConfigUtils.loadConfig( "scenarios/equil/config.xml" );
-		} else {
-			config = ConfigUtils.loadConfig( args );
+			Scenario scenario = ScenarioUtils.loadScenario(config) ;
+			Controler controler = new Controler( scenario ) ;
+			controler.run();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
-		config.controler().setOverwriteFileSetting( OverwriteFileSetting.deleteDirectoryIfExists );
 
 		// possibly modify config here
 
 		// ---
-		
-		Scenario scenario = ScenarioUtils.loadScenario(config) ;
+
+		// config.addModule();
+
 
 		// possibly modify scenario here
 		
 		// ---
-		
-		Controler controler = new Controler( scenario ) ;
 		
 		// possibly modify controler here
 
 //		controler.addOverridingModule( new OTFVisLiveModule() ) ;
 
 //		controler.addOverridingModule( new SimWrapperModule() );
+
 		
 		// ---
-		
-		controler.run();
 	}
 	
 }

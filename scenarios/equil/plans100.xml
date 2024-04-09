@@ -22,7 +22,7 @@
 <person id="2">
 	<plan>
 		<act type="h" x="-25000" y="0" link="1" end_time="05:59" />
-		<leg mode="car">
+		<leg mode="train96-97">
 			<route>2 7 12</route>
 		</leg>
 		<act type="w" x="10000" y="0" link="20" dur="02:30" />
@@ -40,7 +40,7 @@
 			<route>2 7 12</route>
 		</leg>
 		<act type="w" x="10000" y="0" link="20" dur="01:30" />
-		<leg mode="car">
+		<leg mode="train01-10">
 			<route>13 14 15 1</route>
 		</leg>
 		<act type="h" x="-25000" y="0" link="1" />
@@ -78,7 +78,7 @@
 <person id="6">
 	<plan>
 		<act type="h" x="-25000" y="0" link="1" end_time="06:00" />
-		<leg mode="car">
+		<leg mode="train90-01">
 			<route>2 7 12</route>
 		</leg>
 		<act type="w" x="10000" y="0" link="20" dur="00:30" />
