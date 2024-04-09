@@ -4,7 +4,7 @@ Originally from matsim-example-project, I attempted to modify the codes to effec
 
 The modification involves importing CSV file, parsing it and updating Config.xml.
 
-Details can be found at [https://woom221.github.io/](https://woom221.github.io/)
+Details can be found at [https://woom221.github.io/](https://woom221.github.io/){:target="_blank"}
 
 The work is still in progress.
 
